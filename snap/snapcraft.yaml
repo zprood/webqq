@@ -1,0 +1,57 @@
+name: webqq
+version: '0.1'
+summary: QQ web version, 网页版QQ客户端。
+description: |
+  QQ 网页端，欢迎使用。将就下吧！
+
+confinement: strict
+grade: stable
+
+parts:
+  electron-app:
+    plugin: nodejs
+    source: app/
+
+    stage-packages:
+      - libnotify4
+      - libappindicator1
+      - libxtst6
+      - libnss3
+      - libxss1
+      - fontconfig-config
+      - gconf2
+      - libasound2
+      - pulseaudio
+      - gnome-themes-standard
+      - fcitx-frontend-gtk2
+      - overlay-scrollbar-gtk2
+      - libatk-adaptor
+      - fonts-wqy-microhei
+      - libcanberra-gtk-module
+      - libdbusmenu-glib4
+      - libgconf-2-4
+      - libasound2-data
+      - libsoundtouch1
+      - libc6 
+    after:
+      - desktop-glib-only
+
+    build: node_modules/.bin/electron-builder
+    install: |
+      mkdir $SNAPCRAFT_PART_INSTALL/app
+      mv dist/linux-unpacked/* $SNAPCRAFT_PART_INSTALL/app
+    prime:
+      - -node_modules
+
+apps:
+  webqq:
+    command: env TMPDIR=$XDG_RUNTIME_DIR desktop-launch $SNAP/app/webqq
+    plugs:
+      - home
+      - x11
+      - unity7
+      - browser-support
+      - network
+      - gsettings
+      - pulseaudio
+      - opengl
