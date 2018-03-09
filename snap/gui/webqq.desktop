@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=QQ Web
+Icon=${SNAP}/meta/gui/icon.png
+Categories=;;
+Exec=webqq
+Terminal=false
